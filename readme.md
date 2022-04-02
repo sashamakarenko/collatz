@@ -6,9 +6,9 @@ For details read [makarenko-alexandre-3n+1.pdf](makarenko-alexandre-3n%2B1.pdf)
 
 ### New/different formulation
 
-> Change 1 - Instead of dividing even numbers by `2` we add `1` shifted left by the number of trailing zeros $T$.
+> Change 1 - Instead of dividing even numbers by 2 we add 1 shifted left by the number of trailing zeros T.
 
-> Change 2 - The sequence ends when it reaches $2^{T_n}$. In other words, eventually there will be only single `1` shifted left by the number of divisions by `2` we would accomplish with the regular Collatz algorithm.
+> Change 2 - The sequence ends when it reaches <!-- $2^{T_n}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/MEdYYWXR1N.svg">. In other words, eventually there will be only single 1 shifted left by the number of divisions by 2 we would accomplish with the regular Collatz algorithm.
 
 Example for `11`:
 
@@ -32,11 +32,24 @@ Example for `11`:
 |    |    /16|        1|10000000000|    nop|
 |   4|  **1**|        1|10000000000|**1024**|
 
-Each new sequence value $X_{i+1}$ will be : $X_{i+1}=3X_i+2^{T_i}$ where $T_i$ is the number of trailing zeros in the value $X_i$.
+Each new sequence value <!-- $X_{i+1}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/KmjBk4eU2V.svg"> will be : 
+<!-- $$
+X_{i+1}=3X_i+2^{T_i}
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/xQ98WaELLy.svg"></div>
+where <!-- $T_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/Bx06MVbakm.svg"> is the number of trailing zeros in the value <!-- $X_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/EyHvo6lclg.svg">.
+
 
 ### Reverse algorithm
 
-Given a value $X_{i+1}$ we can find all $X_i$ with $X_i=(X_{i+1}-2^{T_i})/3$ by evaluating all $T_i$.
+Given a value <!-- $X_{i+1}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/KmjBk4eU2V.svg"> we can find all possible <!-- $X_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/EyHvo6lclg.svg"> with 
+<!-- $$
+X_i=(X_{i+1}-2^{T_i})/3
+$$ --> 
+
+<div align="center"><img style="background: white;" src="svg/VBGjcqKtRs.svg"></div>
+by evaluating all <!-- $T_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/Bx06MVbakm.svg">.
 
 Example of all values reverted from $2^{10}$
 
@@ -70,9 +83,9 @@ Example of all values reverted from $2^{10}$
 |      |      |      |      |      |     1|          1|
 
 
-The backward algorithm is combinatorial where the values reverted $2^{T_n}$ and $2^{T_n-1}$ never overlap.
+The backward algorithm is combinatorial where the values reverted <!-- $2^{T_n}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/6ohxBcH1zy.svg"> and <!-- $2^{T_n-1}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/bH7faq91Jg.svg"> never overlap.
 
-> **Proof**.  By tending $T_n$ and $T_n-1$ to infinity the backward sequence will produce all integers.
+> **Proof**.  By tending <!-- $T_n$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/T4aerQLQiU.svg"> and <!-- $T_n-1$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/JbUbCdFeys.svg"> to infinity the backward sequence will produce all integers.
 
 ## Code
 
