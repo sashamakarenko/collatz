@@ -38,6 +38,7 @@ X_{i+1}=3X_i+2^{T_i}
 $$ --> 
 
 <div align="center"><img style="background: white;" src="svg/xQ98WaELLy.svg"></div>
+
 where <!-- $T_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/Bx06MVbakm.svg"> is the number of trailing zeros in the value <!-- $X_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/EyHvo6lclg.svg">.
 
 
@@ -49,6 +50,7 @@ X_i=(X_{i+1}-2^{T_i})/3
 $$ --> 
 
 <div align="center"><img style="background: white;" src="svg/VBGjcqKtRs.svg"></div>
+
 by evaluating all <!-- $T_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/Bx06MVbakm.svg">.
 
 Example of all values reverted from $2^{10}$
