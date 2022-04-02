@@ -53,7 +53,7 @@ $$ -->
 
 by evaluating all <!-- $T_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/Bx06MVbakm.svg">.
 
-Example of all values reverted from $2^{10}$
+Example of all values reverted from <!-- $2^{10}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/lO8Nkg8vLD.svg">
 
 |step 0|step 1|step 2|step 3|step 4|step 5|     binary|
 |-----:|-----:|-----:|-----:|-----:|-----:|----------:|
@@ -85,7 +85,7 @@ Example of all values reverted from $2^{10}$
 |      |      |      |      |      |     1|          1|
 
 
-The backward algorithm is combinatorial where the values reverted <!-- $2^{T_n}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/6ohxBcH1zy.svg"> and <!-- $2^{T_n-1}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/bH7faq91Jg.svg"> never overlap.
+The backward algorithm is combinatorial where the values reverted from <!-- $2^{T_n}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/6ohxBcH1zy.svg"> and <!-- $2^{T_n-1}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/bH7faq91Jg.svg"> never overlap.
 
 > **Proof**.  By tending <!-- $T_n$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/T4aerQLQiU.svg"> and <!-- $T_n-1$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/JbUbCdFeys.svg"> to infinity the backward sequence will produce all integers.
 
