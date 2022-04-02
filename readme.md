@@ -2,7 +2,7 @@
 
 ## Proof
 
-Read [makarenko-alexandre-3n+1.pdf](makarenko-alexandre-3n%2B1.pdf.pdf)
+Read [makarenko-alexandre-3n+1.pdf](makarenko-alexandre-3n%2B1.pdf)
 
 
 ## Code
