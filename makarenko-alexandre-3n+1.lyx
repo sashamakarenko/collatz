@@ -1,0 +1,1550 @@
+#LyX 2.2 created this file. For more info see http://www.lyx.org/
+\lyxformat 508
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass scrartcl
+\use_default_options true
+\begin_modules
+theorems-ams
+eqs-within-sections
+figs-within-sections
+\end_modules
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+\begin_inset Formula $3n+1$
+\end_inset
+
+ conjecture: a proof or almost
+\end_layout
+
+\begin_layout Author
+Alexandre MAKARENKO
+\end_layout
+
+\begin_layout Abstract
+The original Collatz algorithm is rewritten to avoid division by two and
+ to transform it from hailstone to a steadily growing value.
+ Then the problem is reverted and solved in combinatorial way to find all
+ integers leading to the sequence end.
+\end_layout
+
+\begin_layout Section
+Collatz differently
+\end_layout
+
+\begin_layout Subsection
+Notations
+\end_layout
+
+\begin_layout Standard
+In the original formulation for any integer number 
+\begin_inset Formula $X_{i}>0$
+\end_inset
+
+ to obtain 
+\begin_inset Formula $X_{i+1}$
+\end_inset
+
+ we either multiply 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ by 3 and add 1 if it is odd, or divide it by 2 until the result remains
+ even.
+ Such an algorithm leads to a, so called, hailstone behaviour of 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For any integer number 
+\begin_inset Formula $X_{i}>0$
+\end_inset
+
+ represented in binary basis we will use 
+\begin_inset Formula $H_{i}$
+\end_inset
+
+ (Head) to designate the most significant bit position and 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+(Tail) the least significant bit position (number of trailing zeros).
+ For example for a binary number
+\end_layout
+
+\begin_layout Standard
+
+\family typewriter
+\series bold
+1
+\series default
+000101010
+\series bold
+1
+\series default
+000
+\begin_inset Newline newline
+\end_inset
+
+H000000000T000
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $H=13$
+\end_inset
+
+ and 
+\begin_inset Formula $T=3$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Key statement
+\end_layout
+
+\begin_layout Standard
+The new equivalent sequence will be
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+X_{i+1}=3X_{i}+2^{T_{i}}\label{eq:xi1xi}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and Collatz states it will eventually lead to 
+\begin_inset Formula $H_{n}=T_{n}$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{equation}
+X_{n}=2^{Tn}\label{eq:xn2tn}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In other words to a single 1 shifted left by 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+ bits.
+ Any additional step for 
+\begin_inset Formula $i>n$
+\end_inset
+
+ will merely multiply 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+ by 4
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{i+1}=3X_{i}+2^{T_{i}}=3\cdot2^{T_{i}}+2^{T_{i}}=4\cdot2^{T_{i}}=2^{T_{i}+2}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+or shift it left by two positions.
+\end_layout
+
+\begin_layout Standard
+Example for 49:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="10" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+binary 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+decimal 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+original 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+0
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+110001
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+49
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+49
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+1
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+10010100
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+148
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+37
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+111000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+448
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+10110000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+1408
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+11
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+4
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+1000100000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+4352
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+17
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+5
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+11010000000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+13312
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+13
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+6
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+1010000000000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+40960
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+5
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+7
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+100000000000000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+131072
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+(end)1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+8
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+10000000000000000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+524288
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+(useless)1
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Let us demonstrate in details a step for 
+\begin_inset Formula $X_{2}=448=111000000$
+\end_inset
+
+.
+ After multiplication by 3 instead of dividing the result by 2 we add 
+\begin_inset Formula $2^{6}=1000000$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Tabular
+<lyxtabular version="3" rows="5" columns="4">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<column alignment="right" valignment="top">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $i$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+binary 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+decimal 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+original 
+\begin_inset Formula $X_{i}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+2
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+111000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+448
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+7
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+10101000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+448*3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
++1000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
++
+\begin_inset Formula $2^{6}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+3
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+
+\begin_inset space ~
+\end_inset
+
+10110000000
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" leftline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+1408
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="right" valignment="top" topline="true" bottomline="true" leftline="true" rightline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\family typewriter
+11
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+With this new formulation the recursion will be:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{1}=3X_{0}+2^{T_{0}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{2}=3X_{1}+2^{T_{1}}=3\left(3X_{0}+2^{T_{0}}\right)+2^{T_{1}}=3^{2}\cdot X_{0}+3^{1}\cdot2^{T_{0}}+3^{0}\cdot2^{T_{1}}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+X_{n}=3^{n}\cdot X_{0}+3^{n-1}\cdot2^{T_{0}}+\cdots+3^{1}\cdot2^{T_{n-2}}+3^{0}\cdot2^{T_{n-1}}\label{eq:xn3nx0}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Sequence properties
+\end_layout
+
+\begin_layout Fact
+The number of steps to complete the sequence is exactly the number of odd
+ values in the original Collatz.
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Fact
+For any 
+\begin_inset Formula $j>i$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+T_{j}>T_{i}\label{eq:Tji}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+One could say: the problem is no longer a hailstone.
+\end_layout
+
+\begin_layout Fact
+On a side note, between two neighbour steps:
+\end_layout
+
+\begin_layout Fact
+\begin_inset Formula 
+\[
+H_{i+1}-H_{i}=1\,or\,2
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Fact
+and in average the head speed before it meats the tail is 
+\begin_inset Formula $S_{H}=Av\left(H_{i+1}-H_{i}\right)=\log_{2}3$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Fact
+Meanwhile the tail moves with average speed 
+\begin_inset Formula $S_{T}=2$
+\end_inset
+
+ (for 
+\begin_inset Formula $H_{i}-T_{i}>2$
+\end_inset
+
+).
+ 
+\end_layout
+
+\begin_layout Standard
+So, intuitively, we would expect the tail to catch and substitute the head
+ (this is exactly what Collatz is about).
+\end_layout
+
+\begin_layout Section
+The proof
+\end_layout
+
+\begin_layout Standard
+For a given sequence end 
+\begin_inset Formula $X_{n}=2^{T_{n}}$
+\end_inset
+
+ there are generally many starting points 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+ leading to 
+\begin_inset Formula $X_{n}$
+\end_inset
+
+.
+ For instance, both 
+\begin_inset Formula $X_{0}=26$
+\end_inset
+
+ and 
+\begin_inset Formula $X_{0}=85$
+\end_inset
+
+ end with 
+\begin_inset Formula $X_{n}=256=2^{8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Subsection
+Key moment
+\end_layout
+
+\begin_layout Standard
+Instead of generating values according to Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xn2tn"
+
+\end_inset
+
+ we will look for all possible paths back from 
+\begin_inset Formula $2^{T_{n}}=1\ll T_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Reverting Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xn2tn"
+
+\end_inset
+
+ yields
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+X_{i}=\left(X_{i+1}-2^{T_{i}}\right)/3\label{eq:xixi13}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula 
+\begin{equation}
+0\leq T_{i}<T_{i+1}\label{eq:0titn}
+\end{equation}
+
+\end_inset
+
+and
+\begin_inset Formula 
+\begin{equation}
+\mod\left(X_{i+1}-2^{T_{i}},3\right)=0\label{eq:modxtn3}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This means that starting from a 
+\begin_inset Formula $X_{n}=2^{T_{n}}$
+\end_inset
+
+ we can find all possible values for 
+\begin_inset Formula $X_{n-1}$
+\end_inset
+
+ by testing 
+\begin_inset Formula $T_{n-1}$
+\end_inset
+
+ against Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:0titn"
+
+\end_inset
+
+ and Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:modxtn3"
+
+\end_inset
+
+.
+ Then repeat for each 
+\begin_inset Formula $T_{n-1}$
+\end_inset
+
+.
+ And so on we will discover all values leading to 
+\begin_inset Formula $X_{n}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For example, observing closer a value 
+\begin_inset Formula $2^{T_{n}}=1000000...0000$
+\end_inset
+
+ one can see that the number of suitable values for 
+\begin_inset Formula $T_{n-1}$
+\end_inset
+
+ is 
+\begin_inset Formula $T_{n}/2$
+\end_inset
+
+ (number of zero pairs).
+ Moreover, the lowest acceptable 
+\begin_inset Formula $T_{n-1}=1$
+\end_inset
+
+ if 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+ is even otherwise 
+\begin_inset Formula $T_{n-1}=2$
+\end_inset
+
+.
+ While the highest is always 
+\begin_inset Formula $T_{n-1}=T_{n}-2$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+All child values of 
+\begin_inset Formula $2^{T_{n}}$
+\end_inset
+
+ with even 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+ and odd 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+ never overlap (see Example).
+ Thus picking up two large starting points 
+\begin_inset Formula $2^{T_{n}-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $2^{T_{n}}$
+\end_inset
+
+ will seed uniquely values situated below 
+\begin_inset Formula $2^{T_{n}}/3$
+\end_inset
+
+.
+ Tending 
+\begin_inset Formula $T_{n}$
+\end_inset
+
+ to infinity then will fill the integers from 
+\begin_inset Formula $1$
+\end_inset
+
+ to 
+\begin_inset Formula $\infty$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Proof
+If for any integer 
+\begin_inset Formula $X_{0}$
+\end_inset
+
+ there is always a way to reach it from a 
+\begin_inset Formula $2^{T_{n}}$
+\end_inset
+
+ according to Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xixi13"
+
+\end_inset
+
+ the same path can be followed back by means of Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xn2tn"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Example
+\end_layout
+
+\begin_layout Standard
+Values reverted from 
+\begin_inset Formula $2^{7}$
+\end_inset
+
+ and 
+\begin_inset Formula $2^{8}$
+\end_inset
+
+ with Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:xixi13"
+
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset listings
+inline false
+status open
+
+\begin_layout Plain Layout
+
+128      10000000 odd Tn=7
+\end_layout
+
+\begin_layout Plain Layout
+
+  42       101010 = (10000000-10)/11       = 1111110/11
+\end_layout
+
+\begin_layout Plain Layout
+
+  40       101000 = (10000000-1000)/11     = 1111000/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    13       1101 = (101000-1)/11          = 100111/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    12       1100 = (101000-100)/11        = 100100/11
+\end_layout
+
+\begin_layout Plain Layout
+
+  32       100000 = (10000000-100000)/11   = 1100000/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    10       1010 = (100000-10)/11         = 11110/11
+\end_layout
+
+\begin_layout Plain Layout
+
+      3        11 = (1010-1)/11            = 1001/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    8        1000 = (100000-1000)/11       = 11000/11
+\end_layout
+
+\begin_layout Plain Layout
+
+      2        10 = (1000-10)/11           = 110/11
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+256     100000000 even Tn=8
+\end_layout
+
+\begin_layout Plain Layout
+
+  85      1010101 = (100000000-1)/11       = 11111111/11
+\end_layout
+
+\begin_layout Plain Layout
+
+  84      1010100 = (100000000-100)/11     = 11111100/11
+\end_layout
+
+\begin_layout Plain Layout
+
+  80      1010000 = (100000000-10000)/11   = 11110000/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    26      11010 = (1010000-10)/11        = 1001110/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    24      11000 = (1010000-1000)/11      = 1001000/11
+\end_layout
+
+\begin_layout Plain Layout
+
+  64      1000000 = (100000000-1000000)/11 = 11000000/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    21      10101 = (1000000-1)/11         = 111111/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    20      10100 = (1000000-100)/11       = 111100/11
+\end_layout
+
+\begin_layout Plain Layout
+
+      6       110 = (10100-10)/11          = 10010/11
+\end_layout
+
+\begin_layout Plain Layout
+
+    16      10000 = (1000000-10000)/11     = 110000/11
+\end_layout
+
+\begin_layout Plain Layout
+
+      5       101 = (10000-1)/11           = 1111/11
+\end_layout
+
+\begin_layout Plain Layout
+
+      4       100 = (10000-100)/11         = 1100/11
+\end_layout
+
+\begin_layout Plain Layout
+
+        1       1 = (100-1)/11             = 11/11
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Source code
+\end_layout
+
+\begin_layout Standard
+This document and computer programs may be found here:
+\end_layout
+
+\begin_layout Standard
+https://github.com/sashamakarenko/collatz
+\end_layout
+
+\end_body
+\end_document
