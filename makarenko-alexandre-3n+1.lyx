@@ -88,10 +88,12 @@ Alexandre MAKARENKO
 \end_layout
 
 \begin_layout Abstract
-The original Collatz algorithm is rewritten to avoid division by two and
- to transform it from hailstone to a steadily growing value.
- Then the problem is reverted and solved in combinatorial way to find all
- integers leading to the sequence end.
+The Collatz algorithm is rewritten to remove divisions by two and to transform
+ it from a hailstone to a steadily growing value.
+ In contrast with original problem this new sequence becomes reversible
+ and it is reverted in combinatorial way to find all integers leading to
+ the sequence end.
+ Computer programs are available for demonstrations and experimenting.
 \end_layout
 
 \begin_layout Section
@@ -129,15 +131,23 @@ For any integer number
 \begin_inset Formula $X_{i}>0$
 \end_inset
 
- represented in binary basis we will use 
+ represented in base-2 we will use 
 \begin_inset Formula $H_{i}$
 \end_inset
 
- (Head) to designate the most significant bit position and 
+ (
+\begin_inset Formula $H$
+\end_inset
+
+ead) to designate the most significant bit position and 
 \begin_inset Formula $T_{i}$
 \end_inset
 
-(Tail) the least significant bit position (number of trailing zeros).
+(
+\begin_inset Formula $T$
+\end_inset
+
+ail) the least significant bit position (number of trailing zeros).
  For example for a binary number
 \end_layout
 
@@ -174,7 +184,7 @@ Key statement
 \end_layout
 
 \begin_layout Standard
-The new equivalent sequence will be
+The new sequence will be
 \end_layout
 
 \begin_layout Standard
@@ -196,7 +206,7 @@ and Collatz states it will eventually lead to
 
 \begin_inset Formula 
 \begin{equation}
-X_{n}=2^{Tn}\label{eq:xn2tn}
+X_{n}=2^{H_{n}}=2^{T_{n}}\label{eq:xn2tn}
 \end{equation}
 
 \end_inset
@@ -210,7 +220,22 @@ In other words to a single 1 shifted left by
 \end_inset
 
  bits.
- Any additional step for 
+\end_layout
+
+\begin_layout Remark
+
+\series bold
+\begin_inset Formula $T_{n}$
+\end_inset
+
+
+\series default
+ is exactly the number of divisions by 2 we would accomplish with the regular
+ Collatz algorithm.
+\end_layout
+
+\begin_layout Standard
+Any additional step for 
 \begin_inset Formula $i>n$
 \end_inset
 
@@ -1077,6 +1102,25 @@ The number of steps to complete the sequence is exactly the number of odd
 \end_layout
 
 \begin_layout Fact
+For a step 
+\begin_inset Formula $i$
+\end_inset
+
+ the new value is exactly the original Collatz value multiplied by 
+\begin_inset Formula $T_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset space ~
+\end_inset
+
+
+\end_layout
+
+\begin_layout Fact
 For any 
 \begin_inset Formula $j>i$
 \end_inset
@@ -1141,7 +1185,7 @@ So, intuitively, we would expect the tail to catch and substitute the head
 \end_layout
 
 \begin_layout Section
-The proof
+Proof or not ?
 \end_layout
 
 \begin_layout Standard
