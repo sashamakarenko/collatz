@@ -10,7 +10,7 @@ For details read [makarenko-alexandre-3n+1.pdf](makarenko-alexandre-3n%2B1.pdf)
 
 > Change 2 - The sequence ends when it reaches <!-- $2^{T_n}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/MEdYYWXR1N.svg">. In other words, eventually there will be only single 1 shifted left by the number of divisions by 2 we would accomplish with the regular Collatz algorithm.
 
-Example for `11`:
+Example for **11**:
 
 |step|old decimal|old binary|new binary|new decimal|
 |---:|------:|--------:|----------:|------:|

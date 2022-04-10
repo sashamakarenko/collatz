@@ -87,6 +87,10 @@ figs-within-sections
 Alexandre MAKARENKO
 \end_layout
 
+\begin_layout Date
+April 2, 2022
+\end_layout
+
 \begin_layout Abstract
 The Collatz algorithm is rewritten to remove divisions by two and to transform
  it from a hailstone to a steadily growing value.
