@@ -112,3 +112,6 @@ Example: solve reverse Collatz for 47 starting from 2^68:
 ## Benchmarks
 
 See in `bench` directory.
+
+[![views](https://hits.dwyl.com/sashamakarenko/collatz.svg?style=flat)](http://hits.dwyl.com/sashamakarenko/collatz)
+
