@@ -31,9 +31,8 @@ Example for **11**:
 |   4|  **1**|        1|10000000000|**1024**|
 
 Each new sequence value $X_{i+1}$ will be : 
-$$
-X_{i+1}=3X_i+2^{T_i}
-$$ 
+
+$$X_{i+1}=3X_i+2^{T_i}$$ 
 
 where $T_i$ is the number of trailing zeros in the value <!-- $X_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/EyHvo6lclg.svg"/>.
 
