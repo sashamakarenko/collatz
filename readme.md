@@ -168,7 +168,7 @@ $N_i$ is a function of $i$ which grows as $N_i=4 N_{i-1} / 3$. Examples of $N_i$
 |  80 |       6638155867 |      26552624064 | 0.333335 |  334 |
 
 
-> **Proof**.  By tending $T_n$ and $T_{n-1}$ to infinity the backward sequence will produce all integers.
+> **Proof**.  By tending $n$ to infinity the backward sequences from $2^n$ and $2^{n-1}$ will produce all integers.
 If any other cycle (not ending by 1) existed, it would lead to an infinite number of values breaking the counting function $N_i$.
 
 ## Code
