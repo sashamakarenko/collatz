@@ -32,23 +32,20 @@ Example for **11**:
 
 Each new sequence value $X_{i+1}$ will be : 
 
-$$X_{i+1}=3X_i+2^{T_i}$$ 
+$$X_{i+1}=3X_i+2^{T_i}$$
 
-where $T_i$ is the number of trailing zeros in the value <!-- $X_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/EyHvo6lclg.svg"/>.
+where $T_i$ is the number of trailing zeros in the value $X_i$.
 
 
 ## Reverse algorithm
 
-Given a value <!-- $X_{i+1}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/KmjBk4eU2V.svg"/> we can find all possible <!-- $X_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/EyHvo6lclg.svg"/> with 
-<!-- $$
-X_i=(X_{i+1}-2^{T_i})/3
-$$ --> 
+Given a value $X_{i+1}$ we can find all possible $X_i$ with 
 
-<div align="center"><img style="background: white;" src="svg/VBGjcqKtRs.svg"/></div>
+$$X_i=(X_{i+1}-2^{T_i})/3$$
 
-by evaluating all <!-- $T_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/Bx06MVbakm.svg"/>.
+by evaluating all $T_i$ where $0 \leq i<n$.
 
-Example of all values reverted from <!-- $2^{10}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/lO8Nkg8vLD.svg"/>
+Example of all values reverted from $2^{10}$:
 
 |step 0|step 1|step 2|step 3|step 4|step 5|     binary|
 |-----:|-----:|-----:|-----:|-----:|-----:|----------:|
@@ -80,11 +77,11 @@ Example of all values reverted from <!-- $2^{10}$ --> <img style="transform: tra
 |      |      |      |      |      |     1|          1|
 
 
-The backward algorithm is combinatorial where the values reverted from <!-- $2^{T_n}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/6ohxBcH1zy.svg"/> and <!-- $2^{T_n-1}$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/bH7faq91Jg.svg"/> never overlap.
+The backward algorithm is combinatorial where the values reverted from $2^{T_n}$ and $2^{T_n-1}$  never overlap.
 
-Let's name by <!-- $N_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/ATiElXEKjM.svg"/> the number of unique values produced by $2^{i}$. Since $2^{i}$ produces all values of $2^{i-2}$, <!-- $N_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/ATiElXEKjM.svg"/> will not include values of $2^{i-2}$. In our example above, $N_{10}$ = 12 (values between 1024 and 256).
+Let's name by $N_i$ the number of unique values produced by $2^{i}$. Since $2^{i}$ produces all values of $2^{i-2}$, $N_i$ will not include values of $2^{i-2}$. In our example above, $N_{10}$ = 12 (values between 1024 and 256).
 
-<!-- $N_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/ATiElXEKjM.svg"/> is a function of $i$ which grows as $N_i=4 N_{i-1} / 3$. Examples of <!-- $N_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/ATiElXEKjM.svg"/> up to $i=80$:
+$N_i$ is a function of $i$ which grows as $N_i=4 N_{i-1} / 3$. Examples of $N_i$ up to $i=80$:
 
 | $i$ | $N_i$ | $\sum{N_i}$ | $\left(N_i-N_{i-1}\right)/N_{i-1}$ | Time,s |
 |----:|-----------------:|-----------------:|---------:|-----:|
@@ -171,8 +168,8 @@ Let's name by <!-- $N_i$ --> <img style="transform: translateY(0.1em); backgroun
 |  80 |       6638155867 |      26552624064 | 0.333335 |  334 |
 
 
-> **Proof**.  By tending <!-- $T_n$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/T4aerQLQiU.svg"/> and <!-- $T_n-1$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/JbUbCdFeys.svg"/> to infinity the backward sequence will produce all integers.
-If any other cycle (not ending by 1) existed, it would lead to an infinite number of values breaking the counting function <!-- $N_i$ --> <img style="transform: translateY(0.1em); background: white;" src="svg/ATiElXEKjM.svg"/>.
+> **Proof**.  By tending $T_n$ and $T_{n-1}$ to infinity the backward sequence will produce all integers.
+If any other cycle (not ending by 1) existed, it would lead to an infinite number of values breaking the counting function $N_i$.
 
 ## Code
 
