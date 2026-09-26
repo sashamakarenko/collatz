@@ -79,7 +79,7 @@ Example of all values reverted from $2^{10}$:
 
 The backward algorithm is combinatorial where the values reverted from $2^{T_n}$ and $2^{T_n-1}$  never overlap.
 
-Let's name by $N_i$ the number of unique values produced by $2^{i}$. Since $2^{i}$ produces all values of $2^{i-2}$, $N_i$ will not include values of $2^{i-2}$. In our example above, $N_{10}$ = 12 (values between 1024 and 256).
+Let's name $N_i$ the number of unique values produced by $2^{i}$. Since $2^{i}$ produces all values of $2^{i-2}$, $N_i$ will not include values of $2^{i-2}$. In our example above, $N_{10}$ = 12 (values between 1024 and 256).
 
 $N_i$ is a function of $i$ which grows as $N_i=4 N_{i-1} / 3$. Examples of $N_i$ up to $i=80$:
 
