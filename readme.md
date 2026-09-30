@@ -43,7 +43,7 @@ Given a value $X_{i+1}$ we can find all possible $X_i$ with
 
 $$X_i=(X_{i+1}-2^{T_i})/3$$
 
-by evaluating all $T_i$ where $0 \leq i<n$.
+by evaluating all $T_i$ where $0 \leq T_i < T_{i+1}$.
 
 Example of all values reverted from $2^{10}$:
 
