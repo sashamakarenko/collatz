@@ -40,12 +40,12 @@ public class Numbers {
 
         @Override
         public String toString() {
-            return "\u001B[92;1m" + v + "\u001B[90m ^" + p + " \u001B[3" + (p == 0 ? '1' : '4') + "m" + toLong() + "\u001B[0m";
+            return "\u001B[92;1m" + v + "\u001B[90m ^" + (v.bitLength()+p-1) + "-" + p + " \u001B[3" + (p == 0 ? '1' : '4') + "m" + toLong() + "\u001B[0m";
         }
     }
 
     static void children(Number nm, int nmax, int depth, int shift) {
-        System.out.printf("%3d %3d | %3d | ", depth, shift, nmax);
+        // System.out.printf("%3d %3d | %3d | ", depth, shift, nmax);
         for (int d = 0; d < depth; ++d) {
             System.out.print(".  ");
         }
@@ -65,6 +65,9 @@ public class Numbers {
             Number next = nm.minusOne(nmax - n);
             if (next.div3() == 0) {
                 count += dig(next, nmax - n);
+                if( next.p == 0 ){
+                    count += 1L << 32;
+                }
             }
         }
         return count;
@@ -83,10 +86,9 @@ public class Numbers {
             children(x, x.p - 2, 0, 0);
         }
 
-        long t1 = System.nanoTime();
         long count = dig(x, x.p - 2);
-        long t2 = System.nanoTime();
-
-        System.out.println(count + " " + ((t2 - t1) / 1_000_000L));
+        long newCount = count >> 32;
+        count &= 0xffffffffL;
+        System.out.println( "total: " + count + " new: " + newCount );
     }
 }
