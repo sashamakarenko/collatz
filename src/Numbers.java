@@ -40,7 +40,7 @@ public class Numbers {
 
         @Override
         public String toString() {
-            return "\u001B[92;1m" + v + "\u001B[90m ^" + (v.bitLength()+p-1) + "-" + p + " \u001B[3" + (p == 0 ? '1' : '4') + "m" + toLong() + "\u001B[0m";
+            return "\u001B[9" + ( v.remainder(THREE).equals(ZERO) ? '3' : '2') + ";1m" + v + "\u001B[90m ^" + (v.bitLength()+p-1) + "-" + p + " \u001B[3" + (p == 0 ? '1' : '4') + "m" + toLong() + "\u001B[0m";
         }
     }
 

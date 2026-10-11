@@ -52,6 +52,10 @@ public class Count
 
     static long dig( BigInteger X, int n )
     {
+        if( X.remainder(THREE).equals(BigInteger.ZERO) )
+        {
+            return 1;
+        }
         long noNew = 1;
         for( int i = N; i > 0; --i )
         {
@@ -91,6 +95,10 @@ public class Count
 
     static long dig( long X, int n )
     {
+        if( X % 3 == 0 )
+        {
+            return 1;
+        }
         int noNew = 1;
         for( int i = N; i > 0; --i )
         {
