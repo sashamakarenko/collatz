@@ -179,7 +179,7 @@ Running the command `java Numbers X` in `./src` displays all values for $N_{X}$.
 
 where each $j$-th value $X_{ij}$ produced from $2^{i}$ is displayed as 
 
-$$ .\space\space\space\space.\space\space\space\space.\space\space\space\space v_{ij} \space \text{\textasciicircum} L-R\space\space X_{ij} $$
+$.\space\space\space\space.\space\space\space\space.\space\space\space\space v_{ij} \space$^ $L-R\space\space X_{ij}$
 
 meaning $X_{ij}=v_{ij}\times2^{R}$ with L and R as left-most and right-most bits respectively. L for information only and the dotted indentation is the depth to display better the childhood relationship.
 
@@ -256,7 +256,7 @@ $> java Count 80
 
 ```
 
-Numbers.java displays all unique numbers produced from $T_i$ to $T_i-2$.
+Numbers.java displays all unique numbers produced from $2^i$ to $2^{i-2}$.
 
 
 ```bash
