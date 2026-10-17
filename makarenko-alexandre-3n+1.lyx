@@ -145,19 +145,11 @@ For any integer number
 \begin_inset Formula $H_{i}$
 \end_inset
 
- (
-\begin_inset Formula $H$
-\end_inset
-
-ead) to designate the most significant bit position and 
+ (Head) to designate the most significant bit position and 
 \begin_inset Formula $T_{i}$
 \end_inset
 
-(
-\begin_inset Formula $T$
-\end_inset
-
-ail) the least significant bit position (number of trailing zeros).
+(Tail) the least significant bit position (number of trailing zeros).
  For example for a binary number
 \end_layout
 
@@ -1153,29 +1145,6 @@ T_{j}>T_{i}\label{eq:Tji}
 One could say: the problem is no longer a hailstone.
 \end_layout
 
-\begin_layout Fact
-On a side note, between two neighbour steps:
-\end_layout
-
-\begin_layout Fact
-\begin_inset Formula 
-\[
-H_{i+1}-H_{i}=1\,or\,2
-\]
-
-\end_inset
-
-
-\end_layout
-
-\begin_layout Fact
-and in average the head speed before it meats the tail is 
-\begin_inset Formula $\log_{2}3$
-\end_inset
-
-.
-\end_layout
-
 \begin_layout Section
 Proof or not ?
 \end_layout
@@ -1262,7 +1231,7 @@ where
 and
 \begin_inset Formula 
 \begin{equation}
-\mod\left(X_{i+1}-2^{T_{i}},3\right)=0\label{eq:modxtn3}
+X_{i+1}-2^{T_{i}}\equiv0\,\left(mod\,3\right)\label{eq:modxtn3}
 \end{equation}
 
 \end_inset
@@ -3311,30 +3280,405 @@ produces all values of
 \begin_inset Formula $N_{10}=12$
 \end_inset
 
- : [1024, 341, 340, 113, 336, 320, 106, 35, 104, 34, 11, 96], 
+ : {1024, 341, 340, 113, 336, 320, 106, 35, 104, 34, 11, 96}, 
 \begin_inset Formula $N_{8}=6$
 \end_inset
 
- : [256, 85, 84, 80, 26, 24].
+ : {256, 85, 84, 80, 26, 24}.
 \end_layout
 
 \begin_layout Standard
 \begin_inset Formula $N_{i}$
 \end_inset
 
- is a determinstic counting function of 
+ is a deterministic counting function of 
 \begin_inset Formula $i$
 \end_inset
 
  which grows as 
-\begin_inset Formula $N_{i}=\frac{4}{3}N_{i-1}$
+\begin_inset Formula 
+\begin{equation}
+N_{i}=\frac{4}{3}N_{i-1}\label{eq:43Ni}
+\end{equation}
+
 \end_inset
 
-(formal demonstration required here).
+
 \end_layout
 
 \begin_layout Standard
-Examples of 
+Running the command 
+\family typewriter
+
+\begin_inset Quotes eld
+\end_inset
+
+java Numbers X
+\begin_inset Quotes erd
+\end_inset
+
+ 
+\family default
+in ./src displays all values for 
+\begin_inset Formula $N_{X}.$
+\end_inset
+
+ For example:
+\end_layout
+
+\begin_layout Standard
+\noindent
+\align center
+\begin_inset Graphics
+	filename img/N14-N15.png
+	scale 140
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where each 
+\begin_inset Formula $j$
+\end_inset
+
+-th value 
+\begin_inset Formula $X_{ij}$
+\end_inset
+
+ produced from 
+\begin_inset Formula $2^{i}$
+\end_inset
+
+ is displayed as 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+.\,\,\,\,.\,\,\,\,.\,\,\,\,v_{ij}\,\mathcircumflex L-R\,\,X_{ij}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+meaning 
+\begin_inset Formula $X_{ij}=v_{ij}\times2^{R}$
+\end_inset
+
+ with 
+\begin_inset Formula $L$
+\end_inset
+
+ and 
+\begin_inset Formula $R$
+\end_inset
+
+ as leftmost and rightmost bits respectively.
+ 
+\begin_inset Formula $L$
+\end_inset
+
+ for information only and the dotted indentation is the depth to display
+ better the childhood relationship.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $v_{ij}$
+\end_inset
+
+ are printed in green or yellow when 
+\begin_inset Formula $v_{ij}\equiv0\,\left(mod\,3\right)$
+\end_inset
+
+.
+ 
+\begin_inset Formula $X_{ij}$
+\end_inset
+
+ are printed in blue or red when 
+\begin_inset Formula $R=0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $N_{i}$
+\end_inset
+
+, in other words, is the number of all 
+\begin_inset Formula $X_{ij}$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+N_{i}=|\{X_{ij}\}|
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Computing 
+\begin_inset Formula $\{v_{i+1,j}\}$
+\end_inset
+
+ is producing exactly the same values as 
+\begin_inset Formula $\{v_{ij}\}$
+\end_inset
+
+ since starting from 
+\begin_inset Formula $2^{i+1}$
+\end_inset
+
+ provides only one trailing 
+\begin_inset Formula $0$
+\end_inset
+
+ more.
+ Due to this 
+\begin_inset Formula $0$
+\end_inset
+
+, there are two possibilities for an 
+\begin_inset Formula $X_{i+1,j}$
+\end_inset
+
+ coming from 
+\begin_inset Formula $X_{ij}.$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Either it is a double of the previous value (blue)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{i+1,j}=2X_{ij}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+or occasionally new value (red)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+X_{i+1,j}=2\left(X_{ij}-1\right)/3
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This makes all 
+\begin_inset Formula $X_{ij}$
+\end_inset
+
+ unique.
+\end_layout
+
+\begin_layout Standard
+It is important to remark that 
+\end_layout
+
+\begin_layout Enumerate
+Absolutely all 
+\begin_inset Formula $V_{i}=\{v_{ij}\}$
+\end_inset
+
+ are naturally found in 
+\begin_inset Formula $V_{i+1}=\{v_{i+1,j}\}$
+\end_inset
+
+ while none of 
+\begin_inset Formula $\{X_{ij}\}$
+\end_inset
+
+ will exist in 
+\begin_inset Formula $\{X_{kj}\}$
+\end_inset
+
+ for 
+\begin_inset Formula $k>i$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The red values are the only new numbers between 
+\begin_inset Formula $V_{i+1}$
+\end_inset
+
+ and 
+\begin_inset Formula $V_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The yellow values never have children since they are multiple of 3 and will
+ never satisfy Eq.
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:modxtn3"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ due to 
+\begin_inset Formula $3K-2^{m}\not\equiv0\,\left(mod\,3\right)$
+\end_inset
+
+ for any 
+\begin_inset Formula $K$
+\end_inset
+
+ and 
+\begin_inset Formula $m$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+Starting from 
+\begin_inset Formula $2^{i+1}$
+\end_inset
+
+ doubles the number of possible values compared to 
+\begin_inset Formula $2^{i}$
+\end_inset
+
+ but only 
+\begin_inset Formula $\frac{2}{3}$
+\end_inset
+
+ of all numbers are green and will have children, so 
+\begin_inset Formula $N_{i+1}=2\frac{2}{3}N_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This is also verifiable from computational results.
+ Looking at the Example A, one can notice that for every 8 rows 
+\begin_inset Formula $N_{i}\simeq10N_{i-8}$
+\end_inset
+
+.
+ For instance
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{align*}
+N_{70} & =373815696\\
+N_{78} & =3733966810
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In fact, 
+\begin_inset Formula 
+\[
+\left(\frac{4}{3}\right)^{8}\simeq9.9887212
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{N_{78}}{N_{70}}\simeq9.9887908
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+So more precisely 
+\begin_inset Formula $N_{i}=\left(\frac{4}{3}\right)^{8}N_{i-8}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Proof
+By tending 
+\begin_inset Formula $n$
+\end_inset
+
+ to infinity, the backward sequences from 
+\begin_inset Formula $2^{2}$
+\end_inset
+
+ and 
+\begin_inset Formula $2^{n-1}$
+\end_inset
+
+ will produce all integers from 
+\begin_inset Formula $1$
+\end_inset
+
+ to 
+\begin_inset Formula $\infty$
+\end_inset
+
+.
+ If any other cycle (not ending by 1) existed, it would lead to an infinite
+ number of values breaking the counting function 
+\begin_inset Formula $N_{i}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Example A
+\end_layout
+
+\begin_layout Standard
 \begin_inset Formula $N_{i}$
 \end_inset
 
@@ -7541,38 +7885,8 @@ Examples of
 
 \end_layout
 
-\begin_layout Proof
-By tending 
-\begin_inset Formula $n$
-\end_inset
-
- to infinity, the backward sequences from 
-\begin_inset Formula $2^{2}$
-\end_inset
-
- and 
-\begin_inset Formula $2^{n-1}$
-\end_inset
-
- will produce all integers from 
-\begin_inset Formula $1$
-\end_inset
-
- to 
-\begin_inset Formula $\infty$
-\end_inset
-
-.
- If any other cycle (not ending by 1) existed, it would lead to an infinite
- number of values breaking the counting function 
-\begin_inset Formula $N_{i}$
-\end_inset
-
-.
-\end_layout
-
 \begin_layout Section
-Example
+Example B
 \end_layout
 
 \begin_layout Standard

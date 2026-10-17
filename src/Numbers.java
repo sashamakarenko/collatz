@@ -44,19 +44,25 @@ public class Numbers {
         }
     }
 
-    static void children(Number nm, int nmax, int depth, int shift) {
-        // System.out.printf("%3d %3d | %3d | ", depth, shift, nmax);
+    // returns number of children multiple of 3 (yellow numbers)
+    static long children(Number nm, int nmax, int depth, int shift) {
+        long count = 0;
+
         for (int d = 0; d < depth; ++d) {
             System.out.print(".  ");
+        }
+        if( nm.v.remainder(THREE).equals(ZERO) ){
+            count = 1;
         }
         System.out.println(nm);
 
         for (int n = 1; n <= nmax; ++n) {
             Number next = nm.minusOne(nmax - n);
             if (next.div3() == 0) {
-                children(next, nmax - n, depth + 1, n);
+                count += children(next, nmax - n, depth + 1, n);
             }
         }
+        return count;
     }
 
     static long dig(Number nm, int nmax) {
@@ -82,13 +88,14 @@ public class Numbers {
         int p = Integer.parseInt(args[0]);
         Number x = new Number(p);
 
+        long mul3 = 0;
         if (p <= 24) {
-            children(x, x.p - 2, 0, 0);
+            mul3 = children(x, x.p - 2, 0, 0);
         }
 
         long count = dig(x, x.p - 2);
         long newCount = count >> 32;
         count &= 0xffffffffL;
-        System.out.println( "total: " + count + " new: " + newCount );
+        System.out.println( "total: " + count + " - new(red): " + newCount + " - mul3(yellow): " + mul3 );
     }
 }

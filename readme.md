@@ -43,7 +43,13 @@ Given a value $X_{i+1}$ we can find all possible $X_i$ with
 
 $$X_i=(X_{i+1}-2^{T_i})/3$$
 
-by evaluating all $T_i$ where $0 \leq T_i < T_{i+1}$.
+by evaluating all $T_i$ where 
+
+$$0 \leq T_i < T_{i+1}$$
+
+and
+
+$$X_{i+1}-2^{T_{i}}\equiv 0\space\left(mod\space 3\right)$$
 
 Example of all values reverted from $2^{10}$:
 
@@ -77,9 +83,9 @@ Example of all values reverted from $2^{10}$:
 |      |      |      |      |      |     1|          1|
 
 
-The backward algorithm is combinatorial where the values reverted from $2^{T_n}$ and $2^{T_n-1}$  never overlap.
+The backward algorithm is combinatorial where the values reverted from $2^{T_n}$ and $2^{T_n-1}$ never overlap.
 
-Let's name $N_i$ the number of unique values produced by $2^{i}$. Since $2^{i}$ produces all values of $2^{i-2}$, $N_i$ will not include values of $2^{i-2}$. In our example above, $N_{10}$ = 12 (values between 1024 and 256).
+Let's name $N_i$ the number of unique values produced by $2^{i}$. Since $2^{i}$ produces all values of $2^{i-2}$, $N_i$ will not include values of $2^{i-2}$. In our example above, $N_{10}=12$ : {1024, 341, 340, 113, 336, 320, 106, 35, 104, 34, 11, 96}, $N_{8}=6$ : {256, 85, 84, 80, 26, 24}.
 
 $N_i$ is a function of $i$ which grows as $N_i=4 N_{i-1} / 3$. Examples of $N_i$ up to $i=80$:
 
@@ -167,6 +173,66 @@ $N_i$ is a function of $i$ which grows as $N_i=4 N_{i-1} / 3$. Examples of $N_i$
 |  79 |       4978612219 |      19914468197 | 0.333331 |  235 |
 |  80 |       6638155867 |      26552624064 | 0.333335 |  334 |
 
+Running the command `java Numbers X` in `./src` displays all values for $N_{X}$. For example:
+
+![bwd](img/N14-N15.png)
+
+where each $j$-th value $X_{ij}$ produced from $2^{i}$ is displayed as 
+
+$$ .\space\space\space\space.\space\space\space\space.\space\space\space\space v_{ij} \space \text{\textasciicircum} L-R\space\space X_{ij} $$
+
+meaning $X_{ij}=v_{ij}\times2^{R}$ with L and R as left-most and right-most bits respectively. L for information only and the dotted indentation is the depth to display better the childhood relationship.
+
+$v_{ij}$ are printed in green or yellow when $v_{ij}\equiv0\space\left(mod\space3\right)$. $X_{ij}$ are printed in blue or red when $R=0$.
+
+$N_{i}$, in other words, is the number of all $X_{ij}$:
+
+$$N_{i}=|\{X_{ij}\}|$$
+
+
+
+Computing $\{v_{i+1,j}\}$ is producing exactly the same values as $\{v_{ij}\}$ since starting from $2^{i+1}$ provides only one trailing 0 more. Due to this 0, there are two possibilities for an $X_{i+1,j}$ coming from $X_{ij}$.
+
+Either it is a double of the previous value (blue)
+
+$$X_{i+1,j}=2X_{ij}$$
+
+or occasionally new value (red)
+
+$$X_{i+1,j}=2\left(X_{ij}-1\right)/3$$
+
+This makes all $X_{ij}$ unique.
+
+
+
+
+It is important to remark that 
+
+1. Absolutely all $V_{i}=\{v_{ij}\}$ are naturally found in $V_{i+1}=\{v_{i+1,j}\}$ while none of $\{X_{ij}\}$ will exist in $\{X_{kj}\}$ for $k>i$.
+
+2. The red values are the only new numbers between $V_{i+1}$ and $V_{i}$.
+
+3. The yellow values never have children since they are multiple of 3 and $3K-2^{m} \not\equiv 0\space\left(mod\space 3\right)$ for any K and m.
+
+Starting from $2^{i+1}$ doubles the number of possible values compared to $2^{i}$ but only $\frac{2}{3}$ of all numbers are green and will have children, so $N_{i+1}=2\frac{2}{3}N_{i}$.
+
+This is also verifiable from computational results. Looking at the example above, one can notice that for every 8 rows $N_{i} \simeq 10N_{i-8}$. For instance
+
+$$N_{70} = 373815696$$
+
+$$N_{78} = 3733966810$$
+
+In fact,
+
+$$\left(\frac{4}{3}\right)^{8} \simeq 9.9887212$$
+
+and
+
+$$\frac{N_{78}}{N_{70}} \simeq 9.9887908$$
+
+So more precisely
+
+$$N_{i}=\left(\frac{4}{3}\right)^{8}N_{i-8}$$
 
 > **Proof**.  By tending $n$ to infinity the backward sequences from $2^n$ and $2^{n-1}$ will produce all integers.
 If any other cycle (not ending by 1) existed, it would lead to an infinite number of values breaking the counting function $N_i$.
@@ -191,24 +257,24 @@ $> java Count 80
 ```
 
 Numbers.java displays all unique numbers produced from $T_i$ to $T_i-2$.
-The writing below V^n means $V \times 2^n$.
 
 
 ```bash
 $> javac Numbers.java
 $> java Numbers 10
-  0   0 |   8 | 1 ^10 1024
-  1   2 |   6 | .  5 ^6 320
-  2   1 |   5 | .  .  3 ^5 96
-  2   3 |   3 | .  .  13 ^3 104
-  3   2 |   1 | .  .  .  17 ^1 34
-  4   1 |   0 | .  .  .  .  11 ^0 11
-  2   5 |   1 | .  .  53 ^1 106
-  3   1 |   0 | .  .  .  35 ^0 35
-  1   4 |   4 | .  21 ^4 336
-  1   6 |   2 | .  85 ^2 340
-  2   2 |   0 | .  .  113 ^0 113
-  1   8 |   0 | .  341 ^0 341
+1 ^10-10 1024
+.  5 ^8-6 320
+.  .  3 ^6-5 96
+.  .  13 ^6-3 104
+.  .  .  17 ^5-1 34
+.  .  .  .  11 ^3-0 11
+.  .  53 ^6-1 106
+.  .  .  35 ^5-0 35
+.  21 ^8-4 336
+.  85 ^8-2 340
+.  .  113 ^6-0 113
+.  341 ^8-0 341
+total: 12 - new(red): 4 - mul3(yellow): 2
 
 ```
 
